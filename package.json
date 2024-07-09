@@ -1,0 +1,25 @@
+{
+  "name": "agility-wordpress-import",
+  "version": "1.0.0",
+  "main": "./build/index.js",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsx",
+    "start": "node --env-file=.env build/index.js"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^4.4.0"
+  },
+  "devDependencies": {
+    "@agility/management-sdk": "^0.1.17",
+    "@types/xml2js": "^0.4.14",
+    "form-data": "^4.0.0",
+    "node-html-parser": "^6.1.13",
+    "typescript": "^5.5.3",
+    "xml2js": "^0.6.2"
+  }
+}

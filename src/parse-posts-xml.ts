@@ -2,6 +2,7 @@ import { Post } from "./types/Post";
 import { XMLParser, XMLBuilder, XMLValidator } from "fast-xml-parser"
 import { parseString } from "xml2js";
 import fs from "fs";
+import { DateTime } from "luxon";
 
 interface Props {
 	fileName: string;
@@ -59,6 +60,7 @@ export const parsePostsXml = async ({ fileName }: Props): Promise<Post[]> => {
 					} else {
 						postCategories.push(categories["_"])
 					}
+
 
 					let date = new Date(post["wp:post_date_gmt"])
 					let slug = post["wp:post_name"];

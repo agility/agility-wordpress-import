@@ -1,41 +1,35 @@
+import { getExistingPosts } from "./get-existing-posts"
+import { cleanup, init } from "./init-term"
 import { parsePostsXml } from "./parse-posts-xml"
-import { performReplacements } from "./performReplacements"
-import { resolveMedia } from "./resolveMedia"
+import { resolveCategories } from "./resolve-categories"
+import { savePosts } from "./save-posts"
 
 const doWork = async () => {
 
 	console.log("*** STARTING IMPORT ***")
+
+	//init stuff
+	init()
 
 	const fileName = process.env.WP_EXPORT_FILEPATH || "export.xml"
 
 	//parse the XML
 	const posts = await parsePostsXml({ fileName })
 
-	console.log("Parsed posts: ", posts.length)
+	console.log("Got posts", posts.length)
 
-	//resolve the media
-	await resolveMedia({ posts })
+	//get the existing posts
+	const existingPosts = await getExistingPosts()
 
-	//do the replacements
-	const replacements = [
-		{
-			"old": "http://vostheatre.wordpress.com",
-			"new": "https://vostheatre.com/blog"
-		},
-		{
-			"old": "http://vostheatre.blog",
-			"new": "https://vostheatre.com/blog"
-		},
-		{
-			"old": "https://vostheatre.wordpress.com",
-			"new": "https://vostheatre.com/blog"
-		},
-		{
-			"old": "https://vostheatre.blog",
-			"new": "https://vostheatre.com/blog"
-		}
-	]
-	performReplacements({ posts, replacements })
+	const existingCategories = await resolveCategories({ posts })
+
+
+	await savePosts({ posts, existingPosts, existingCategories })
+
+	//clean up everything...
+	cleanup()
+
+	console.log("*** IMPORT COMPLETE ***")
 
 }
 

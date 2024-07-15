@@ -34,7 +34,7 @@ export const resolveCategories = async ({ posts }: Props): Promise<any[]> => {
 			if (!uniqueCategories.includes(cat)) {
 
 				//check if the category exists in Agility
-				const existingCat = existingCategories.find((c: any) => c.title === cat)
+				const existingCat = existingCategories.find((c: any) => c.title.toLowerCase() === cat.toLowerCase())
 				if (!existingCat) {
 					uniqueCategories.push(cat)
 				}

@@ -81,7 +81,7 @@ export const resolveMedia = async ({ post }: Props): Promise<Res> => {
 				const assets = await apiClient.assetMethods.upload(form, "posts", guid)
 				if (assets && assets.length > 0) {
 					const asset = assets[0]
-					mainImage = asset
+					if (!mainImage) mainImage = asset
 					uploads[src] = asset.edgeUrl
 					image.setAttribute("src", asset.edgeUrl + "?" + queryString)
 				} else {
